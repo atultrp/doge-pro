@@ -8,39 +8,9 @@ function NavLink({ to, children }) {
   </a>
 }
 
-function MobileNav({ open, setOpen }) {
-  return (
-    <div className={`absolute top-0 left-0 h-screen w-screen bg-white transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-      <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20"> {/*logo container*/}
-        <a className="text-2xl font-semibold custom-font uppercase flex space-x-4 items-center" href="/">
-          <span className="">
-            <img src="./Logo/logo.png" alt="logo" />
-          </span>
-          <span className="text-2xl font-medium text-[#252b42]">
-            Baby Doge
-          </span>
-        </a>
-      </div>
-      <div className="flex flex-col ml-4 uppercase">
-        <a className="text-xl font-medium my-4" href="#about" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
-          About
-        </a>
-        <a className="text-xl font-medium my-4" href="#roadmap" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
-          Roadmap
-        </a>
-        <a className="text-xl font-normal my-4" href="#tokens" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
-          Tokens
-        </a>
-        <a className="text-xl font-normal my-4" href="#buytoken" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
-          Buy Token
-        </a>
-      </div>
-    </div>
-  )
-}
 
 export default function Header() {
-
+  
   const [isconnected, setIsConnected] = useState(false);
   const [hasMetamask, setHasMetamask] = useState(false);
   const [signer, setSigner] = useState(undefined);
@@ -87,12 +57,45 @@ export default function Header() {
       console.log(err)
     }
   }
-
+  
   useEffect(() => {
     effectFunction(web3Var);
   }, [web3Var])
 
   const [open, setOpen] = useState(false)
+
+  function MobileNav({ open, setOpen }) {
+    return (
+      <div className={`absolute top-0 left-0 h-screen w-screen bg-white transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
+        <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20"> {/*logo container*/}
+          <a className="text-2xl font-semibold custom-font uppercase flex space-x-4 items-center" href="/">
+            <span className="">
+              <img src="./Logo/logo.png" alt="logo" />
+            </span>
+            <span className="text-2xl font-medium text-[#252b42]">
+              Baby Doge
+            </span>
+          </a>
+        </div>
+        <div className="flex flex-col ml-4 uppercase">
+          <a className="text-xl font-medium my-4" href="#about" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
+            About
+          </a>
+          <a className="text-xl font-medium my-4" href="#roadmap" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
+            Roadmap
+          </a>
+          <a className="text-xl font-normal my-4" href="#tokens" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
+            Tokens
+          </a>
+          <a className="text-xl font-normal my-4" href="#buytoken" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
+            Buy Token
+          </a>
+          <button className={`${userAddress && "truncate"} md:max-w-[14rem] sm:max-w-[10rem] max-w-[8rem] hover:scale-110 bg-[#F5A52F] font-semibold text-white py-2 px-4 duration-300 ease-in-out rounded-full`} onClick={connect} > {(userAddress) ? userAddress : "Connect Wallet"}</button>
+
+        </div>
+      </div>
+    )
+  }
   return (
     <nav className="flex filter drop-shadow-md  text-black px-8 py-4 h-20 items-center">
       <MobileNav open={open} setOpen={setOpen} />
@@ -130,7 +133,7 @@ export default function Header() {
           <NavLink to="#buytoken">
             Buy Token
           </NavLink>
-          <button className="hover:scale-110 bg-[#F5A52F] font-semibold text-white py-2 px-4 duration-300 ease-in-out rounded-full" onClick={connect} > {isconnected ? "Connected" : "Connect Wallet" }</button>
+          <button className={`${userAddress && "truncate"} md:max-w-[14rem] sm:max-w-[10rem] max-w-[8rem] hover:scale-110 bg-[#F5A52F] font-semibold text-white py-2 px-4 duration-300 ease-in-out rounded-full`} onClick={connect} > {(userAddress) ? userAddress : "Connect Wallet"}</button>
         </div>
       </div>
     </nav>
