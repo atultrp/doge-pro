@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from "react";
+import { ethers } from "ethers"
+import Web3 from 'web3';
 
 function NavLink({ to, children }) {
   return <a href={to} className={`px-4 uppercase py-2 hover:rounded-md hover:bg-[#F5A52F] hover:text-white hover:duration-300`}>
@@ -39,6 +41,57 @@ function MobileNav({ open, setOpen }) {
 
 export default function Header() {
 
+  const [isconnected, setIsConnected] = useState(false);
+  const [hasMetamask, setHasMetamask] = useState(false);
+  const [signer, setSigner] = useState(undefined);
+  const [userAddress, setUserAddress] = useState();
+  const [blockchain, setBlockchain] = useState();
+  const [web3Var, setWeb3Var] = useState();
+  const [mintAmount, setMintAmount] = useState(1);
+  const [claimingNft, setClaimingNft] = useState(false);
+  const [feedback, setFeedback] = useState(`Click buy to mint your NFT.`);
+
+  // Metamask Connection
+  const connect = async () => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        await ethereum.request({ method: "eth_requestAccounts" });
+        setIsConnected(true);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        setSigner(provider.getSigner());
+        const web3 = new Web3(window.web3.currentProvider);
+        setWeb3Var(web3);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      setIsConnected(false);
+    }
+  }
+
+  const effectFunction = async (web3Var) => {
+    try {
+      await ethereum.request({ method: "eth_requestAccounts" });
+      setIsConnected(true);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setSigner(provider.getSigner());
+      const web3 = new Web3(window.web3.currentProvider);
+      setWeb3Var(web3);
+
+      // User Address
+      const accountResponse = await web3Var.eth.getAccounts();
+      setBlockchain(accountResponse);
+      const instance = accountResponse[0];
+      setUserAddress(instance);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    effectFunction(web3Var);
+  }, [web3Var])
+
   const [open, setOpen] = useState(false)
   return (
     <nav className="flex filter drop-shadow-md  text-black px-8 py-4 h-20 items-center">
@@ -77,6 +130,7 @@ export default function Header() {
           <NavLink to="#buytoken">
             Buy Token
           </NavLink>
+          <button className="hover:scale-110 bg-[#F5A52F] font-semibold text-white py-2 px-4 duration-300 ease-in-out rounded-full" onClick={connect} > {isconnected ? "Connected" : "Connect Wallet" }</button>
         </div>
       </div>
     </nav>

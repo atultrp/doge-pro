@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
   return (
     <div id="about" className="py-4">
-      <h2 className="text-3xl sm:text-5xl font-medium text-center pt-16 sm-pt-20 text-[#252b42]">About Baby Doge</h2>
+      <h2 className="text-3xl sm:text-5xl font-medium text-center pt-16 sm-pt-20 text-[#252b42] custom-font uppercase">About Baby Doge</h2>
       <div className="px-4 md:px-16 pt-5 sm:pt-20 lg:flex lg:items-center">
         <div className="lg:px-16 lg:mx-auto mx-12 py-4 sm:hidden">
           <img src="./Assets/aboutBabyDoge.svg" alt="" />
