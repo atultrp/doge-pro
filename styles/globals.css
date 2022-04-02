@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
 html,
 body {
   padding: 0;
@@ -6,10 +8,24 @@ body {
     /* Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
 
+.upperBackground {
+  background: linear-gradient(45deg, #F5A52F 50%, white 50% )
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
   box-sizing: border-box;
+}
+
+.custom-font {
+  font-family: 'Acme', sans-serif;
+}
+
+@media only screen and (min-width: 768px) {
+  .upperBackground {
+    background: linear-gradient(25deg, #F5A52F 50%, white 50% )
+  }  
 }
